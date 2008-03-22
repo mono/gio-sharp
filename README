@@ -1,0 +1,49 @@
+The Gtk# website can be found at: http://gtk-sharp.sourceforge.net/
+
+Gio# is an unstable .NET language binding for libgio distributed as part
+of the glib package.  Gio# is free software, licensed under the GNU LGPL.  
+The target is the 2.16 initial release of gio.
+
+It is anticipated that these bindings will be integrated into the gtk-sharp
+package during the 2.14 release cycle, and this independent package will
+cease to exist.  This product is just provided for the impatient soles who
+feel they must chase the bleeding edge and help us find bugs before we
+integrate the library.
+
+Building & Installing Gio#:
+---------------------------
+
+    The build is the traditional:
+
+        ./configure
+        make
+        make install
+
+    If you are compiling from SVN, you will need libtool and the auto* tools
+    and will need to replace the configure above with autogen.sh.
+
+Discussion & Support:
+---------------------
+
+    A mailing list for Gtk# discussion is available.
+
+    You can subscribe to the mailing list by visiting:
+
+        http://lists.ximian.com/mailman/listinfo/gtk-sharp-list
+
+    And following the instructions (on that page) to subscribe.
+    Messages are posted on this mailing list by sending them to:
+
+        gtk-sharp-list@ximian.com
+
+    (The mailing list requires you to subscribe in order to post
+    messages.)
+
+    An archive of this mailing list can be found at:
+
+        http://lists.ximian.com/archives/public/gtk-sharp-list/
+
+    Also, people can get help with and discuss Gtk# on IRC via the
+    #mono channel on the irc.gnome.org IRC server.
+
+

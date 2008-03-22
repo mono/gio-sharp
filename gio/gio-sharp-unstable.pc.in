@@ -1,0 +1,12 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+assemblies_dir=${libdir}/gio-sharp-unstable
+
+Name: GIO#
+Description: GIO# - GIO .NET Binding
+Version: @VERSION@
+Libraries: ${assemblies_dir}/gio-sharp.dll ${assemblies_dir}/gio-sharp.dll.config
+Requires: glib-sharp-2.0
+Cflags:
+Libs: -r:${assemblies_dir}/gio-sharp.dll

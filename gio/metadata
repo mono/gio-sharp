@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<metadata>
+  <attr path="/api/namespace" name="name">GLib</attr>
+  <attr path="/api/namespace/interface[@cname='GFile']/method[@name='GetParseName']" name="name">GetParsedName</attr>
+  <attr path="/api/namespace/interface[@cname='GLoadableIcon']/method[@name='LoadAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/interface[@cname='GVolume']/method[@name='GetMount']" name="name">GetMountInstance</attr>
+  <attr path="/api/namespace/object[@cname='GBufferedInputStream']/method[@name='FillAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GFileEnumerator']/method[@name='CloseAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GFileEnumerator']/method[@name='NextFilesAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GFileInputStream']/method[@name='QueryInfoAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GFileOutputStream']/method[@name='QueryInfoAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GInputStream']/method[@name='CloseAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GInputStream']/method[@name='ReadAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GInputStream']/method[@name='SkipAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='CloseAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='FlushAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='SpliceAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='WriteAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
+  <attr path="/api/namespace/object[@cname='GMemoryOutputStream']/method[@name='GetData']" name="new_flag">1</attr>
+  <attr path="/api/namespace/object[@cname='GMountOperation']/method[@name='Reply']" name="name">EmitReply</attr>
+  <attr path="/api/namespace/object[@cname='GSimpleAsyncResult']/constructor[@cname='g_simple_async_result_new_error']" name="hidden">1</attr>
+  <attr path="/api/namespace/object[@cname='GSimpleAsyncResult']/method[@name='SetError']" name="hidden">1</attr>
+</metadata>
