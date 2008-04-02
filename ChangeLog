@@ -1,5 +1,13 @@
 2008-04-02  Stephane Delcroix  <sdelcroix@novell.com>
 
+	* configure.in:
+	* Makefile.am: 
+	* sample:
+	* sample/TestInfo.cs:
+	* sample/Makefile.am: a working sample.
+
+2008-04-02  Stephane Delcroix  <sdelcroix@novell.com>
+
 	* gio/Makefile.am:
 	* gio/FileFactory.cs: static class mapping the get_file_for_* File
 	instanciators.

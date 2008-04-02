@@ -105,6 +105,7 @@ Makefile
 gio/Makefile
 gio/gio-sharp.dll.config
 gio/gio-sharp-unstable.pc
+sample/Makefile
 ])
 
 echo "---"

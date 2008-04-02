@@ -1,3 +1,3 @@
-SUBDIRS = gio #doc
+SUBDIRS = gio sample #doc
 
 
