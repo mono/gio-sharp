@@ -1,3 +1,9 @@
+2008-04-02  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/Makefile.am:
+	* gio/FileFactory.cs: static class mapping the get_file_for_* File
+	instanciators.
+
 2008-03-31  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/gio-sharp.dll.config.in: map gio to libgio-2.0.so
