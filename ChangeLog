@@ -1,5 +1,10 @@
 2008-04-02  Stephane Delcroix  <sdelcroix@novell.com>
 
+	* gio/metadata:
+	* gio/FileEnumerator.custom: implements IEnumerable
+
+2008-04-02  Stephane Delcroix  <sdelcroix@novell.com>
+
 	* configure.in:
 	* Makefile.am: 
 	* sample:
