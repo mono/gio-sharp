@@ -25,7 +25,7 @@ public IEnumerator GetEnumerator ()
 
 public FileInfo NextFile ()
 {
-	reutrn NextFile ((Cancellable) null);
+	return NextFile ((Cancellable) null);
 }
 
 class Enumerator : IEnumerator
