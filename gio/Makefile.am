@@ -18,7 +18,8 @@ references = $(GLIB_SHARP_LIBS)
 sources =		\
 	FileFactory.cs
 
-customs =		\
+customs =			\
+	FileAdapter.custom	\
 	FileEnumerator.custom
 
 $(API): $(METADATA) $(RAW_API)

@@ -1,4 +1,4 @@
-// FileEnumerator.custom - customizations to GLib.FileEnumerator
+// FileAdapter.custom - customizations to GLib.FileAdapter
 //
 // Authors: Stephane Delcroix  <stephane@delcroix.org>
 //
@@ -18,42 +18,7 @@
 // Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 // Boston, MA 02111-1307, USA.
 
-public IEnumerator GetEnumerator ()
+public override string ToString ()
 {
-	return new Enumerator (this);
-}
-
-public FileInfo NextFile ()
-{
-	return NextFile ((Cancellable) null);
-}
-
-class Enumerator : IEnumerator
-{
-	FileEnumerator file_enumerator;
-
-	public Enumerator (FileEnumerator file_enumerator)
-	{
-		this.file_enumerator = file_enumerator;
-	}
-
-	FileInfo current=null;
-	public object Current {
-		get {
-			return current;
-		}
-	}
-
-	public bool MoveNext ()
-	{
-		current = file_enumerator.NextFile ();
-		if (current == null)
-			return false;
-		return true;
-	}
-
-	public void Reset ()
-	{
-		throw new NotImplementedException ();
-	}
+	return Uri;
 }

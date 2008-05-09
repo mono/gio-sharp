@@ -1,3 +1,7 @@
+2008-05-09  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/FileAdapter.custom: ad a ToString override.
+
 2008-05-03  Andreia Gaita <avidigal@novell.com> 
 
 	* gio/FileEnumerator.custom: Fix return statement
