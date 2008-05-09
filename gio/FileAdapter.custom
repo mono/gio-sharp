@@ -22,3 +22,8 @@ public override string ToString ()
 {
 	return Uri;
 }
+
+public bool Exists
+{
+	get { return QueryExists (null); }
+}

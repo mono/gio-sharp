@@ -1,6 +1,10 @@
 2008-05-09  Stephane Delcroix  <sdelcroix@novell.com>
 
-	* gio/FileAdapter.custom: ad a ToString override.
+	* gio/FileAdapter.custom: adding an Exists property.
+
+2008-05-09  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/FileAdapter.custom: add a ToString override.
 
 2008-05-03  Andreia Gaita <avidigal@novell.com> 
 
