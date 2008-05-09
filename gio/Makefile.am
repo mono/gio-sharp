@@ -19,6 +19,7 @@ sources =		\
 	FileFactory.cs
 
 customs =			\
+	File.custom		\
 	FileAdapter.custom	\
 	FileEnumerator.custom
 
