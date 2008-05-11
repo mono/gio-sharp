@@ -8,7 +8,7 @@ assembly=../gio/gio-sharp.dll
 references = $(GTKSHARP_LIBS) $(addprefix /r:, $(assembly))
 
 noinst_SCRIPTS = $(TARGETS) $(EXTRA_TARGETS)
-CLEANFILES = $(TARGETS) $(EXTRA_TARGETS)
+CLEANFILES = $(TARGETS) $(EXTRA_TARGETS) gio-sharp.dll gio-sharp.dll.config *.mdb
 
 EXTRA_DIST = 			\
 	TestInfo.cs		\
@@ -16,6 +16,7 @@ EXTRA_DIST = 			\
 
 gio-sharp.dll: $(assembly)
 	cp $(assembly) gio-sharp.dll
+	if [ -f $(assembly).mdb ] ; then cp $(assembly).mdb gio-sharp.dll.mdb; fi
 	cp $(assembly).config gio-sharp.dll.config
 
 TestInfo.exe: $(srcdir)/TestInfo.cs gio-sharp.dll

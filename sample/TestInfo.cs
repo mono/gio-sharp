@@ -14,7 +14,7 @@ namespace TestGio {
 			Gtk.Application.Init ();
 
 			File file = FileFactory.NewForUri (args[0]);
-			FileInfo fileinfo = (file as File).QueryInfo ("*",FileQueryInfoFlags.None, null);
+			FileInfo fileinfo = file.QueryInfo ("*",FileQueryInfoFlags.None, null);
 			Console.WriteLine (fileinfo.Name);
 			Console.WriteLine (fileinfo.EditName);
 			Console.WriteLine (fileinfo.ContentType);
