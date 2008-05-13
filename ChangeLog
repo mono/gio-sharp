@@ -1,3 +1,8 @@
+2008-05-13  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/File.custom:
+	* gio/FileAdapter.custom: adding am argumentless Delete method
+
 2008-05-09  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/File.custom: adding the property to the interface too.

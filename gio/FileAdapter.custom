@@ -27,3 +27,8 @@ public bool Exists
 {
 	get { return QueryExists (null); }
 }
+
+public bool Delete ()
+{
+	return Delete (null);
+}

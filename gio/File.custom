@@ -22,3 +22,5 @@ bool Exists
 {
 	get;
 }
+
+bool Delete();
