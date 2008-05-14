@@ -21,4 +21,5 @@
   <attr path="/api/namespace/object[@cname='GMountOperation']/method[@name='Reply']" name="name">EmitReply</attr>
   <attr path="/api/namespace/object[@cname='GSimpleAsyncResult']/constructor[@cname='g_simple_async_result_new_error']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GSimpleAsyncResult']/method[@name='SetError']" name="hidden">1</attr>
+  <attr path="/api/namespace/interface[@cname='GFile']/method[@name='GetUri']" name="hidden">1</attr>
 </metadata>

@@ -1,3 +1,10 @@
+2008-05-14  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/metadata:
+	* gio/File.custom:
+	* gio/FileAdapter.custom: change the signature of File.Uri to be
+	a System.Uri instead of string.
+
 2008-05-13  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/File.custom:

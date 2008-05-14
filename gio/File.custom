@@ -23,4 +23,9 @@ bool Exists
 	get;
 }
 
+System.Uri Uri
+{
+	get;
+}
+
 bool Delete();
