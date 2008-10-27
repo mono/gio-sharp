@@ -1,3 +1,8 @@
+2008-10-24  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/metadata: AppInfo.GetAllForType () returns a AppInfo[] instead
+	of a GList.
+
 2008-05-14  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/metadata:
