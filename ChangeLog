@@ -1,6 +1,6 @@
 2008-10-27  Stephane Delcroix  <sdelcroix@novell.com>
 
-	* configure.in: bump the dependency on glib-sharp to 2.12.5, for the
+	* configure.in: bump the dependency on glib-sharp to 2.12.6, for the
 	ListBase fix.
 
 2008-10-27  Stephane Delcroix  <sdelcroix@novell.com>
