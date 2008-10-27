@@ -1,4 +1,5 @@
 TARGETS =			\
+	TestAppInfo.exe		\
 	TestInfo.exe		\
 	TestDirectory.exe
 
@@ -18,6 +19,9 @@ gio-sharp.dll: $(assembly)
 	cp $(assembly) gio-sharp.dll
 	if [ -f $(assembly).mdb ] ; then cp $(assembly).mdb gio-sharp.dll.mdb; fi
 	cp $(assembly).config gio-sharp.dll.config
+
+TestAppInfo.exe: $(srcdir)/TestAppInfo.cs gio-sharp.dll
+	$(CSC) /debug /out:TestAppInfo.exe $(references) $(srcdir)/TestAppInfo.cs
 
 TestInfo.exe: $(srcdir)/TestInfo.cs gio-sharp.dll
 	$(CSC) /debug /out:TestInfo.exe $(references) $(srcdir)/TestInfo.cs

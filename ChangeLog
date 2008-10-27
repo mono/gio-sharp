@@ -1,3 +1,7 @@
+2008-10-27  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* sample/TestAppInfo.cs: test app for AppInfo.
+
 2008-10-24  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/metadata: AppInfo.GetAllForType () returns a AppInfo[] instead
