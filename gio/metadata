@@ -28,4 +28,5 @@
   <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='All']/return-type" name="element_type">GAppInfo*</attr>
   <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='All']/return-type" name="owned">true</attr>
   <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='All']/return-type" name="elements_owned">true</attr>
+  <attr path="/api/namespace/object[@cname='GThemedIcon']/method[@name='GetNames']/return-type" name="null_term_array">1</attr> 
 </metadata>
