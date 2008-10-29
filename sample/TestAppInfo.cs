@@ -17,7 +17,11 @@ namespace TestGio
 			Console.WriteLine();
 			Console.WriteLine("List of all {0} handlers", args[0]);
 			foreach (AppInfo appinfo in AppInfoAdapter.GetAllForType (args[0]))
-				Console.WriteLine ("\t{0}", appinfo.Name);
+				Console.WriteLine ("\t{0}: {1} ", appinfo.Name, appinfo.Executable);
+
+		//	Console.WriteLine ("All installed AppInfos:");
+		//	foreach (AppInfo appinfo in AppInfoAdapter.All)
+		//		Console.WriteLine ("\t{0}: {1} ", appinfo.Name, appinfo.Executable);
 		}
 	}
 }

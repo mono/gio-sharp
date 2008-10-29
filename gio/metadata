@@ -25,4 +25,7 @@
   <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='GetAllForType']/return-type" name="element_type">GAppInfo*</attr>
   <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='GetAllForType']/return-type" name="owned">true</attr>
 <!--  <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='GetAllForType']/return-type" name="elements_owned">true</attr>-->
+  <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='All']/return-type" name="element_type">GAppInfo*</attr>
+  <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='All']/return-type" name="owned">true</attr>
+  <attr path="/api/namespace/interface[@cname='GAppInfo']/method[@name='All']/return-type" name="elements_owned">true</attr>
 </metadata>
