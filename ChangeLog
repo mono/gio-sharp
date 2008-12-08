@@ -1,5 +1,11 @@
 2008-12-08  Stephane Delcroix  <sdelcroix@novell.com>
 
+	* gio/metadata: change Seekable.Tell() to Position.
+	* gio/StreamWrapper.cs: a wrapper for GLib.[Input|Output]Streams to
+	System.IO.Stream.
+
+2008-12-08  Stephane Delcroix  <sdelcroix@novell.com>
+
 	* gio/metadata: change Seekable.CanSeek from a method to a property 
 	accessor.
 

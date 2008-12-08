@@ -16,7 +16,8 @@ EXTRA_DIST = $(RAW_API) $(METADATA) $(customs) $(sources) gio-sharp-unstable.pc.
 references = $(GLIB_SHARP_LIBS)
 
 sources =		\
-	$(srcdir)/FileFactory.cs
+	$(srcdir)/FileFactory.cs	\
+	$(srcdir)/StreamWrapper.cs
 
 customs =			\
 	File.custom		\
