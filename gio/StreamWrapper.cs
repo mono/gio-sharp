@@ -102,7 +102,18 @@ namespace GLib
 				throw new NotSupportedException ("The stream does not support reading");
 			if (is_disposed)
 				throw new ObjectDisposedException ("The stream is closed");
-			throw new NotImplementedException ();
+			InputStream input_stream = stream as InputStream;
+			if (input_stream == null)
+				throw new System.Exception ("this shouldn't happen");
+
+			if (offset == 0)
+				return (int)input_stream.Read (buffer, (ulong)count, null);
+			else {
+				byte[] buf = new byte[count];
+				int ret = (int)input_stream.Read (buf, (ulong)count, null);
+				buf.CopyTo (buffer, offset);
+				return ret;
+			}
 		}
 
 		public override void Write (byte[] buffer, int offset, int count)
