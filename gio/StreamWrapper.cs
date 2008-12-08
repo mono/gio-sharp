@@ -139,8 +139,23 @@ namespace GLib
 				throw new NotSupportedException ("This stream doesn't support seeking");
 			if (is_disposed)
 				throw new ObjectDisposedException ("The stream is closed");
-			throw new NotImplementedException ();
-			
+			Seekable seekable = stream as Seekable;
+
+			SeekType seek_type;
+			switch (origin) {
+			case System.IO.SeekOrigin.Current:
+				seek_type = SeekType.Cur;
+				break;
+			case System.IO.SeekOrigin.End:
+				seek_type = SeekType.End;
+				break;
+			case System.IO.SeekOrigin.Begin:
+			default:
+				seek_type = SeekType.Set;
+				break;
+			}
+			seekable.Seek (offset, seek_type, null);
+			return Position;
 		}
 
 		public override void SetLength (long value)
