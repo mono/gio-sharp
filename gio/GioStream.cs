@@ -39,6 +39,16 @@ namespace GLib
 		bool can_write;
 		bool is_disposed;
 
+		public GioStream (Uri uri, FileMode mode)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public GioStream (string filename, FileMode mode)
+		{
+			throw new NotImplementedException ();
+		}
+
 		public GioStream (InputStream stream)
 		{
 			this.stream = stream;
