@@ -17,7 +17,8 @@ references = $(GLIB_SHARP_LIBS)
 
 sources =		\
 	$(srcdir)/FileFactory.cs	\
-	$(srcdir)/StreamWrapper.cs
+	$(srcdir)/StreamWrapper.cs	\
+	$(srcdir)/SeekType.cs
 
 customs =			\
 	File.custom		\

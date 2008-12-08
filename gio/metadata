@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
+  <add-node path="/api"><symbol type="simple" cname="GSeekType" name="GLib.SeekType"/></add-node>
   <attr path="/api/namespace" name="name">GLib</attr>
   <attr path="/api/namespace/interface[@cname='GFile']/method[@name='GetParseName']" name="name">GetParsedName</attr>
   <attr path="/api/namespace/interface[@cname='GLoadableIcon']/method[@name='LoadAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
