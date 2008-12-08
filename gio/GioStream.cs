@@ -1,5 +1,5 @@
 /*
- * StreamWrapper.cs: provide a System.IO.Stream api to [Input|Output]Streams
+ * GioStream.cs: provide a System.IO.Stream api to [Input|Output]Streams
  *
  * Author(s):
  *	Stephane Delcroix  (stephane@delcroix.org)
@@ -31,7 +31,7 @@ using System;
 
 namespace GLib
 {
-	public class StreamWrapper : System.IO.Stream
+	public class GioStream : System.IO.Stream
 	{
 		object stream;
 		bool can_read;
@@ -39,7 +39,7 @@ namespace GLib
 		bool can_write;
 		bool is_disposed;
 
-		public StreamWrapper (InputStream stream)
+		public GioStream (InputStream stream)
 		{
 			this.stream = stream;
 			can_read = true;
