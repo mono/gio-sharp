@@ -39,12 +39,12 @@ namespace GLib
 		bool can_write;
 		bool is_disposed;
 
-		public GioStream (Uri uri, FileMode mode)
+		public GioStream (Uri uri, System.IO.FileMode mode)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public GioStream (string filename, FileMode mode)
+		public GioStream (string filename, System.IO.FileMode mode)
 		{
 			throw new NotImplementedException ();
 		}
@@ -74,7 +74,14 @@ namespace GLib
 					throw new NotSupportedException ("This stream doesn't support seeking");
 				if (is_disposed)
 					throw new ObjectDisposedException ("The stream is closed");
-				throw new NotImplementedException ();
+				
+				if (stream is FileInputStream) {
+					FileInfo info = (stream as FileInputStream).QueryInfo ("standard::size", null);
+					return info.Size;
+				}
+
+				throw new NotImplementedException ("implement this using stream_query_info");
+
 
 			}
 		}
