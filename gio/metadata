@@ -38,4 +38,6 @@
   <attr path="/api/namespace/object[@cname='GThemedIcon']/method[@name='GetNames']/return-type" name="null_term_array">1</attr> 
   <attr path="/api/namespace/interface[@cname='GSeekable']/method[@cname='g_seekable_can_seek']" name="name">GetCanSeek</attr>
   <attr path="/api/namespace/interface[@cname='GSeekable']/method[@cname='g_seekable_tell']" name="name">GetPosition</attr>
+  <attr path="/api/namespace/object[@cname='GFileInfo']/method[@cname='g_file_info_get_attribute_int64']" name="name">GetAttributeLong</attr>
+  <attr path="/api/namespace/object[@cname='GFileInfo']/method[@cname='g_file_info_set_attribute_int64']" name="name">SetAttributeLong</attr>
 </metadata>
