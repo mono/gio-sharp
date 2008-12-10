@@ -21,6 +21,14 @@ namespace TestGio {
 			Console.WriteLine (fileinfo.Size);
 			Console.WriteLine (fileinfo.IsHidden);
 			Console.WriteLine (fileinfo.IsSymlink);
+			fileinfo = file.QueryInfo ("time::*",FileQueryInfoFlags.None, null);
+			ulong time =fileinfo.GetAttributeULong ("time::changed");
+			Console.WriteLine (Mono.Unix.Native.NativeConvert.ToDateTime ((long)time));
+			time =fileinfo.GetAttributeULong ("time::created");
+			Console.WriteLine (Mono.Unix.Native.NativeConvert.ToDateTime ((long)time));
+			time =fileinfo.GetAttributeULong ("time::accessed");
+			Console.WriteLine (Mono.Unix.Native.NativeConvert.ToDateTime ((long)time));
+			Console.WriteLine (fileinfo.HasAttribute ("time::changed"));
 		}
 	}
 }

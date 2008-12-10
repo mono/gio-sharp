@@ -24,7 +24,7 @@ TestAppInfo.exe: $(srcdir)/TestAppInfo.cs gio-sharp.dll
 	$(CSC) /debug /out:TestAppInfo.exe $(references) $(srcdir)/TestAppInfo.cs
 
 TestInfo.exe: $(srcdir)/TestInfo.cs gio-sharp.dll
-	$(CSC) /debug /out:TestInfo.exe $(references) $(srcdir)/TestInfo.cs
+	gmcs /debug /out:TestInfo.exe $(references) $(srcdir)/TestInfo.cs -r:Mono.Posix
 
 TestDirectory.exe: $(srcdir)/TestDirectory.cs gio-sharp.dll
 	$(CSC) /debug /out:TestDirectory.exe $(references) $(srcdir)/TestDirectory.cs
