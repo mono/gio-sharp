@@ -3,7 +3,7 @@ pkgconfig_DATA = gio-sharp-unstable.pc
 
 API = gio-api.xml
 RAW_API = gio-api.raw
-METADATA = metadata
+METADATA = Gio.metadata
 ASSEMBLY_NAME = gio-sharp
 ASSEMBLY = gio-sharp.dll
 TARGET = $(ASSEMBLY) $(ASSEMBLY).config
