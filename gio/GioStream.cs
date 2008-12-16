@@ -183,5 +183,14 @@ namespace GLib
 				throw new ObjectDisposedException ("The stream is closed");
 			throw new NotImplementedException ();
 		}
+
+		public override void Close ()
+		{
+			if (stream is InputStream)
+				(stream as InputStream).Close (null);
+			if (stream is OutputStream)
+				(stream as OutputStream).Close (null);
+		}
+
 	}
 }

@@ -1,3 +1,7 @@
+2008-12-16  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/GioStream.cs: override the Close ()
+
 2008-12-08  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/metadata: fix the InputStream.Read api
