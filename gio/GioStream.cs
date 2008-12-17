@@ -197,7 +197,7 @@ namespace GLib
 				(stream as InputStream).Close (null);
 			if (stream is OutputStream)
 				(stream as OutputStream).Close (null);
+			is_disposed = true;
 		}
-
 	}
 }
