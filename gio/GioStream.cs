@@ -56,6 +56,13 @@ namespace GLib
 			can_seek = stream is Seekable && (stream as Seekable).CanSeek;
 		}
 
+		public GioStream (OutputStream stream)
+		{
+			this.stream = stream;
+			can_write = true;
+			can_seek = stream is Seekable && (stream as Seekable).CanSeek;
+		}
+
 		public override bool CanSeek {
 			get { return can_seek; }
 		}

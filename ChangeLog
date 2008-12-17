@@ -1,3 +1,7 @@
+2008-12-17  Stephane Delcroix  <sdelcroix@novell.com>
+
+	* gio/GioStream.cs: ctor fro OutputStreams
+
 2008-12-16  Stephane Delcroix  <sdelcroix@novell.com>
 
 	* gio/GioStream.cs: override the Close ()
