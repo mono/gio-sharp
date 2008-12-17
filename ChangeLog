@@ -1,5 +1,9 @@
 2008-12-17  Stephane Delcroix  <sdelcroix@novell.com>
 
+	* gio/GioStream.cs: implements Write();
+
+2008-12-17  Stephane Delcroix  <sdelcroix@novell.com>
+
 	* gio/Gio.metadata: fix the Write api on OutputStreams
 
 2008-12-17  Stephane Delcroix  <sdelcroix@novell.com>

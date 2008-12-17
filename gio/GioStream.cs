@@ -86,10 +86,11 @@ namespace GLib
 					FileInfo info = (stream as FileInputStream).QueryInfo ("standard::size", null);
 					return info.Size;
 				}
-
-				throw new NotImplementedException ("implement this using stream_query_info");
-
-
+				if (stream is FileOutputStream) {
+					FileInfo info = (stream as FileOutputStream).QueryInfo ("standard::size", null);
+					return info.Size;
+				}
+				throw new NotImplementedException (String.Format ("not implemented for {0} streams", stream.GetType()));
 			}
 		}
 
@@ -154,7 +155,18 @@ namespace GLib
 				throw new NotSupportedException ("The stream does not support writing");
 			if (is_disposed)
 				throw new ObjectDisposedException ("The stream is closed");
-			throw new NotImplementedException ();
+			OutputStream output_stream = stream as OutputStream;
+			if (output_stream == null)
+				throw new System.Exception ("this shouldn't happen");
+			if (offset == 0) {
+				output_stream.Write (buffer, (ulong)count, null);
+				return;
+			} else {
+				byte[] buf = new byte[count];
+				Array.Copy (buffer, offset, buf, 0, count);
+				output_stream.Write (buf, (ulong)count, null);
+				return;
+			}
 		}
 
 		public override long Seek (long offset, System.IO.SeekOrigin origin)
