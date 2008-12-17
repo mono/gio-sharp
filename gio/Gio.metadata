@@ -20,6 +20,12 @@
   <attr path="/api/namespace/object[@cname='GInputStream']/method[@cname='g_input_stream_read_all']/parameters/parameter[@name='buffer']" name="array">1</attr>
   <attr path="/api/namespace/object[@cname='GInputStream']/method[@cname='g_input_stream_read_async']/parameters/parameter[@name='buffer']" name="type">guchar*</attr>
   <attr path="/api/namespace/object[@cname='GInputStream']/method[@cname='g_input_stream_read_async']/parameters/parameter[@name='buffer']" name="array">1</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write']/parameters/parameter[@name='buffer']" name="type">guchar*</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write']/parameters/parameter[@name='buffer']" name="array">1</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write_all']/parameters/parameter[@name='buffer']" name="type">guchar*</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write_all']/parameters/parameter[@name='buffer']" name="array">1</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write_async']/parameters/parameter[@name='buffer']" name="type">guchar*</attr>
+  <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write_async']/parameters/parameter[@name='buffer']" name="array">1</attr>
   <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='CloseAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
   <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='FlushAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
   <attr path="/api/namespace/object[@cname='GOutputStream']/method[@name='SpliceAsync']/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
