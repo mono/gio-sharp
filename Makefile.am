@@ -1,2 +1,2 @@
-SUBDRIS =	\
+SUBDIRS =	\
 	gio
