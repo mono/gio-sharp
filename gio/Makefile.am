@@ -1,7 +1,6 @@
 UNSAFE = -unsafe
 DEBUG = -debug
 
-
 SRCS =						\
 	AssemblyInfo.cs
 
@@ -26,9 +25,21 @@ gio-sharp.dll: $(srcdir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"
 	$(CSC) -target:library -out:$@ $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs
 
-install: gio-sharp.dll
+install-data-local: gio-sharp.dll
 	@echo -e "\n*** Installing $< into the GAC"
-	gacutil -i $<
+	@echo "$(GACUTIL) /i $< /f $(GACUTIL_FLAGS)"
+	@$(GACUTIL) /i $< /f $(GACUTIL_FLAGS) || exit 1;
+	@echo
+
+uninstall-local:
+	@echo -e "\n*** Un-installing gio-sharp.dll from the GAC"
+	@echo "$(GACUTIL) /u gio-sharp $(GACUTIL_FLAGS)"
+	@$(GACUTIL) /u gio-sharp $(GACUTIL_FLAGS) || exit 1;
+	@echo
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = gio-sharp-2.0.pc
+
 
 CLEANFILES = 			\
 	gio-sharp.dll 	\
@@ -38,4 +49,5 @@ CLEANFILES = 			\
 EXTRA_DIST =			\
 	$(SRCS)			\
 	$(CUSTOMS)		\
-	gtk-api.raw
+	gio-api.raw		\
+	gio-sharp-2.0.pc.in
