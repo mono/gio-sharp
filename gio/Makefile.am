@@ -2,7 +2,9 @@ UNSAFE = -unsafe
 DEBUG = -debug
 
 SRCS =						\
-	AssemblyInfo.cs
+	AssemblyInfo.cs				\
+	FileFactory.cs				\
+	GioStream.cs
 
 CUSTOMS =
 
