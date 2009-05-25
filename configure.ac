@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(gio-sharp, 2.13.90, stephane@delcroix.org)
+AC_INIT(gio-sharp, 2.13.92, stephane@delcroix.org)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(gio/AssemblyInfo.cs)
 
