@@ -3,7 +3,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PROJECT=exiv2-sharp
+PROJECT=gio-sharp
 
 autoreconf -v --force --install -I config -I m4
 
