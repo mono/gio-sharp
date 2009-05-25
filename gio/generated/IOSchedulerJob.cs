@@ -14,15 +14,13 @@ namespace GLib {
 		static extern void g_io_scheduler_job_send_to_mainloop_async(IntPtr raw, GLibSharp.GSourceFuncNative func, IntPtr user_data, GLib.DestroyNotify notify);
 
 		public void SendToMainloopAsync(GLib.GSourceFunc func) {
-			GLibSharp.GSourceFuncWrapper func_wrapper;
+			GLibSharp.GSourceFuncWrapper func_wrapper = new GLibSharp.GSourceFuncWrapper (func);
 			IntPtr user_data;
 			GLib.DestroyNotify notify;
 			if (func == null) {
-				func_wrapper = null;
 				user_data = IntPtr.Zero;
 				notify = null;
 			} else {
-				func_wrapper = new GLibSharp.GSourceFuncWrapper (func);
 				user_data = (IntPtr) GCHandle.Alloc (func_wrapper);
 				notify = GLib.DestroyHelper.NotifyHandler;
 			}
@@ -33,15 +31,13 @@ namespace GLib {
 		static extern bool g_io_scheduler_job_send_to_mainloop(IntPtr raw, GLibSharp.GSourceFuncNative func, IntPtr user_data, GLib.DestroyNotify notify);
 
 		public bool SendToMainloop(GLib.GSourceFunc func) {
-			GLibSharp.GSourceFuncWrapper func_wrapper;
+			GLibSharp.GSourceFuncWrapper func_wrapper = new GLibSharp.GSourceFuncWrapper (func);
 			IntPtr user_data;
 			GLib.DestroyNotify notify;
 			if (func == null) {
-				func_wrapper = null;
 				user_data = IntPtr.Zero;
 				notify = null;
 			} else {
-				func_wrapper = new GLibSharp.GSourceFuncWrapper (func);
 				user_data = (IntPtr) GCHandle.Alloc (func_wrapper);
 				notify = GLib.DestroyHelper.NotifyHandler;
 			}

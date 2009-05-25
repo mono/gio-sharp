@@ -28,7 +28,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnVolumeChanged (GLib.Object.GetObject (volume, false) as GLib.Volume);
+				volume_monitor_managed.OnVolumeChanged (GLib.VolumeAdapter.GetObject (volume, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -77,7 +77,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnMountAdded (GLib.Object.GetObject (mount, false) as GLib.Mount);
+				volume_monitor_managed.OnMountAdded (GLib.MountAdapter.GetObject (mount, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -126,7 +126,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnMountRemoved (GLib.Object.GetObject (mount, false) as GLib.Mount);
+				volume_monitor_managed.OnMountRemoved (GLib.MountAdapter.GetObject (mount, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -175,7 +175,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnDriveDisconnected (GLib.Object.GetObject (drive, false) as GLib.Drive);
+				volume_monitor_managed.OnDriveDisconnected (GLib.DriveAdapter.GetObject (drive, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -224,7 +224,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnDriveChanged (GLib.Object.GetObject (drive, false) as GLib.Drive);
+				volume_monitor_managed.OnDriveChanged (GLib.DriveAdapter.GetObject (drive, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -273,7 +273,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnDriveConnected (GLib.Object.GetObject (drive, false) as GLib.Drive);
+				volume_monitor_managed.OnDriveConnected (GLib.DriveAdapter.GetObject (drive, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -322,7 +322,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnMountPreUnmount (GLib.Object.GetObject (mount, false) as GLib.Mount);
+				volume_monitor_managed.OnMountPreUnmount (GLib.MountAdapter.GetObject (mount, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -371,7 +371,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnDriveEjectButton (GLib.Object.GetObject (drive, false) as GLib.Drive);
+				volume_monitor_managed.OnDriveEjectButton (GLib.DriveAdapter.GetObject (drive, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -420,7 +420,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnVolumeRemoved (GLib.Object.GetObject (volume, false) as GLib.Volume);
+				volume_monitor_managed.OnVolumeRemoved (GLib.VolumeAdapter.GetObject (volume, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -469,7 +469,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnMountChanged (GLib.Object.GetObject (mount, false) as GLib.Mount);
+				volume_monitor_managed.OnMountChanged (GLib.MountAdapter.GetObject (mount, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -518,7 +518,7 @@ namespace GLib {
 		{
 			try {
 				VolumeMonitor volume_monitor_managed = GLib.Object.GetObject (volume_monitor, false) as VolumeMonitor;
-				volume_monitor_managed.OnVolumeAdded (GLib.Object.GetObject (volume, false) as GLib.Volume);
+				volume_monitor_managed.OnVolumeAdded (GLib.VolumeAdapter.GetObject (volume, false));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -586,7 +586,7 @@ namespace GLib {
 		public GLib.Volume GetVolumeForUuid(string uuid) {
 			IntPtr native_uuid = GLib.Marshaller.StringToPtrGStrdup (uuid);
 			IntPtr raw_ret = g_volume_monitor_get_volume_for_uuid(Handle, native_uuid);
-			GLib.Volume ret = GLib.Object.GetObject (raw_ret, false) as GLib.Volume;
+			GLib.Volume ret = GLib.VolumeAdapter.GetObject (raw_ret, false);
 			GLib.Marshaller.Free (native_uuid);
 			return ret;
 		}
@@ -618,7 +618,7 @@ namespace GLib {
 
 		public static GLib.Volume AdoptOrphanMount(GLib.Mount mount) {
 			IntPtr raw_ret = g_volume_monitor_adopt_orphan_mount(mount == null ? IntPtr.Zero : mount.Handle);
-			GLib.Volume ret = GLib.Object.GetObject (raw_ret, false) as GLib.Volume;
+			GLib.Volume ret = GLib.VolumeAdapter.GetObject (raw_ret, false);
 			return ret;
 		}
 
@@ -639,7 +639,7 @@ namespace GLib {
 		public GLib.Mount GetMountForUuid(string uuid) {
 			IntPtr native_uuid = GLib.Marshaller.StringToPtrGStrdup (uuid);
 			IntPtr raw_ret = g_volume_monitor_get_mount_for_uuid(Handle, native_uuid);
-			GLib.Mount ret = GLib.Object.GetObject (raw_ret, false) as GLib.Mount;
+			GLib.Mount ret = GLib.MountAdapter.GetObject (raw_ret, false);
 			GLib.Marshaller.Free (native_uuid);
 			return ret;
 		}

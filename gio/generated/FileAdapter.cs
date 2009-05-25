@@ -1534,7 +1534,7 @@ namespace GLib {
 		public GLib.Mount FindEnclosingMount(GLib.Cancellable cancellable) {
 			IntPtr error = IntPtr.Zero;
 			IntPtr raw_ret = g_file_find_enclosing_mount(Handle, cancellable == null ? IntPtr.Zero : cancellable.Handle, out error);
-			GLib.Mount ret = GLib.Object.GetObject (raw_ret, false) as GLib.Mount;
+			GLib.Mount ret = GLib.MountAdapter.GetObject (raw_ret, false);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			return ret;
 		}
@@ -1862,7 +1862,7 @@ namespace GLib {
 		public GLib.AppInfo QueryDefaultHandler(GLib.Cancellable cancellable) {
 			IntPtr error = IntPtr.Zero;
 			IntPtr raw_ret = g_file_query_default_handler(Handle, cancellable == null ? IntPtr.Zero : cancellable.Handle, out error);
-			GLib.AppInfo ret = GLib.Object.GetObject (raw_ret, false) as GLib.AppInfo;
+			GLib.AppInfo ret = GLib.AppInfoAdapter.GetObject (raw_ret, false);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			return ret;
 		}
@@ -2094,7 +2094,7 @@ namespace GLib {
 		public GLib.Mount FindEnclosingMountFinish(GLib.AsyncResult res) {
 			IntPtr error = IntPtr.Zero;
 			IntPtr raw_ret = g_file_find_enclosing_mount_finish(Handle, res == null ? IntPtr.Zero : res.Handle, out error);
-			GLib.Mount ret = GLib.Object.GetObject (raw_ret, false) as GLib.Mount;
+			GLib.Mount ret = GLib.MountAdapter.GetObject (raw_ret, false);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			return ret;
 		}

@@ -133,7 +133,7 @@ namespace GLib {
 
 		public GLib.AppInfo Dup() {
 			IntPtr raw_ret = g_app_info_dup(Handle);
-			GLib.AppInfo ret = GLib.Object.GetObject (raw_ret, false) as GLib.AppInfo;
+			GLib.AppInfo ret = GLib.AppInfoAdapter.GetObject (raw_ret, false);
 			return ret;
 		}
 

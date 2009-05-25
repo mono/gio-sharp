@@ -118,7 +118,7 @@ namespace GLib {
 		public GLib.AppInfo GetDefaultForUriScheme(string uri_scheme) {
 			IntPtr native_uri_scheme = GLib.Marshaller.StringToPtrGStrdup (uri_scheme);
 			IntPtr raw_ret = g_desktop_app_info_lookup_get_default_for_uri_scheme(Handle, native_uri_scheme);
-			GLib.AppInfo ret = GLib.Object.GetObject (raw_ret, false) as GLib.AppInfo;
+			GLib.AppInfo ret = GLib.AppInfoAdapter.GetObject (raw_ret, false);
 			GLib.Marshaller.Free (native_uri_scheme);
 			return ret;
 		}
