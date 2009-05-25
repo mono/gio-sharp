@@ -1,2 +1,3 @@
-SUBDIRS =	\
+SUBDIRS =		\
+	generator	\
 	gio

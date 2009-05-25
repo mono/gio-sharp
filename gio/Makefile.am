@@ -19,9 +19,12 @@ gio-api.xml: $(srcdir)/gio-api.raw $(srcdir)/Gio.metadata
 	chmod +w $(builddir)/gio-api.xml
 	gapi2-fixup --api=gio-api.xml --metadata=$(srcdir)/Gio.metadata
 
-generated/File.cs: gio-api.xml $(CUSTOMS)
+$(top_builddir)/generator/gapi_codegen.exe:
+	$(MAKE) -C $(top_builddir)/generator gapi_codegen.exe
+
+generated/File.cs: gio-api.xml $(CUSTOMS) $(top_builddir)/generator/gapi_codegen.exe
 	@echo -e "\n*** Generating C# code"
-	gapi2-codegen $(GLIBSHARP_CFLAGS) --outdir=generated --customdir=$(srcdir) --generate gio-api.xml
+	$(MONO) $(top_builddir)/generator/gapi_codegen.exe $(GLIBSHARP_CFLAGS) --outdir=generated --customdir=$(srcdir) --generate gio-api.xml
 
 gio-sharp.dll: $(srcdir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"

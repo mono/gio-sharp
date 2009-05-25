@@ -7,6 +7,7 @@ AM_INIT_AUTOMAKE
 
 PACKAGE_VERSION=gio-sharp-2.0
 AC_SUBST(PACKAGE_VERSION)
+AC_PATH_PROG(MONO, mono)
 AC_PATH_PROG(CSC, gmcs)
 AC_PATH_PROG(GACUTIL, gacutil, no)
 if test "x$GACUTIL" = "xno" ; then
@@ -33,6 +34,7 @@ AC_SUBST(LIB_SUFFIX)
 
 AC_OUTPUT(
 Makefile 
+generator/Makefile
 gio/Makefile
 gio/gio-sharp.dll.config
 gio/gio-sharp-2.0.pc
