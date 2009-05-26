@@ -22,9 +22,9 @@ gio-api.xml: $(srcdir)/gio-api.raw $(srcdir)/Gio.metadata
 $(top_builddir)/generator/gapi_codegen.exe:
 	$(MAKE) -C $(top_builddir)/generator gapi_codegen.exe
 
-generated/File.cs: gio-api.xml $(CUSTOMS) $(top_builddir)/generator/gapi_codegen.exe
+generated/File.cs: gio-api.xml $(CUSTOMS) $(builddir)/../generator/gapi_codegen.exe
 	@echo -e "\n*** Generating C# code"
-	$(MONO) $(top_builddir)/generator/gapi_codegen.exe $(GLIBSHARP_CFLAGS) --outdir=generated --customdir=$(srcdir) --generate gio-api.xml
+	$(MONO) $(builddir)/../generator/gapi_codegen.exe $(GLIBSHARP_CFLAGS) --outdir=generated --customdir=$(srcdir) --generate gio-api.xml
 
 gio-sharp.dll: $(srcdir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"
