@@ -13,6 +13,9 @@ ASSEMBLIES =					\
 
 all: gio-sharp.dll
 
+gapidir = $(datadir)/gapi-2.0
+gapi_DATA = gio-api.xml
+
 gio-api.xml: $(srcdir)/gio-api.raw $(srcdir)/Gio.metadata
 	@echo -e "\n*** Massaging the raw api into $@"
 	cp $(srcdir)/gio-api.raw gio-api.xml
