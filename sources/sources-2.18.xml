@@ -1,5 +1,5 @@
 <gapi-parser-input>
-  <api filename="../gio/gio-api.raw">
+  <api filename="../gio/gio-api-2.18.raw">
     <library name="libgio-2.0-0.dll">
       <namespace name="G">
         <directory path="glib-2.18.4/gio">

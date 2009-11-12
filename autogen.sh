@@ -1,17 +1,5 @@
 #!/bin/sh
 
-srcdir=`dirname $0`
-test -z "$srcdir" && srcdir=.
+echo "error: run either autogen-2.18.sh or autogen-2.22.sh"
 
-PROJECT=gio-sharp
-
-autoreconf -v --force --install -I config -I m4
-
-if test x$NOCONFIGURE = x; then
-  echo Running $srcdir/configure $conf_flags "$@" ...
-  $srcdir/configure $conf_flags "$@" \
-  && echo Now type \`make\' to compile $PROJECT || exit 1
-else
-  echo Skipping configure process.
-fi
-
+exit 1;
