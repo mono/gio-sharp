@@ -7,14 +7,25 @@ AM_INIT_AUTOMAKE
 
 PACKAGE_VERSION=gio-sharp-2.0
 AC_SUBST(PACKAGE_VERSION)
-AC_PATH_PROG(MONO, mono)
-AC_PATH_PROG(CSC, gmcs)
+AC_PATH_PROG(MONO, mono, no)
+if test "x$MONO" = "xno" ; then
+	using_mono=no
+	MONO=
+	AC_PATH_PROG(CSC, csc.exe)
+else
+	using_mono=yes
+	AC_PATH_PROG(CSC, gmcs)
+fi
+AC_SUBST(SLASH)
+AM_CONDITIONAL(USING_MONO, [test $using_mono = yes])
 AC_PATH_PROG(GACUTIL, gacutil, no)
 if test "x$GACUTIL" = "xno" ; then
 	AC_MSG_ERROR([No gacutil tool found. You need to install either the mono or .Net SDK.])
 fi
 
-GACUTIL_FLAGS='/package $(PACKAGE_VERSION) /gacdir $(DESTDIR)$(prefix)/lib'
+if test $using_mono = yes; then
+	GACUTIL_FLAGS='/package $(PACKAGE_VERSION) /gacdir $(DESTDIR)$(prefix)/lib'
+fi
 
 AC_SUBST(GACUTIL)
 AC_SUBST(GACUTIL_FLAGS)

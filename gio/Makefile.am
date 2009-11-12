@@ -9,7 +9,7 @@ SRCS =						\
 CUSTOMS =
 
 ASSEMBLIES =					\
-	-pkg:glib-sharp-2.0
+	`pkg-config --libs glib-sharp-2.0`
 
 all: gio-sharp.dll
 
@@ -31,19 +31,27 @@ generated/File.cs: gio-api.xml $(CUSTOMS) $(builddir)/../generator/gapi_codegen.
 
 gio-sharp.dll: $(srcdir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"
+if USING_MONO
 	$(CSC) -target:library -out:$@ $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs
+else
+# !USING_MONO implies being on Windows
+# work around irritating csc misfeature: source file names on the
+# command line from subdirs must use \ directory separators
+	@echo $(CSC) -target:library -out:$@ $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs | \
+		sed -e 's!^/\(.\)/!\1:\\!' -e 's!/!\\!g' | cmd
+endif
 
 install-data-local: gio-sharp.dll
-	@echo -e "\n*** Installing $< into the GAC"
-	@echo "$(GACUTIL) /i $< /f $(GACUTIL_FLAGS)"
-	@$(GACUTIL) /i $< /f $(GACUTIL_FLAGS) || exit 1;
-	@echo
+	-$(GACUTIL) -i $< -f $(GACUTIL_FLAGS)
+if !USING_MONO
+	$(MKDIR_P) $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION); $(INSTALL) $< $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION)
+endif
 
 uninstall-local:
-	@echo -e "\n*** Un-installing gio-sharp.dll from the GAC"
-	@echo "$(GACUTIL) /u gio-sharp $(GACUTIL_FLAGS)"
-	@$(GACUTIL) /u gio-sharp $(GACUTIL_FLAGS) || exit 1;
-	@echo
+	-$(GACUTIL) -u gio-sharp.dll $(GACUTIL_FLAGS)
+if !USING_MONO
+	rm $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION)/gio-sharp.dll
+endif
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gio-sharp-2.0.pc
