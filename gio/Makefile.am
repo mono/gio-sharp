@@ -36,7 +36,7 @@ generated/File.cs: gio-api.xml $(CUSTOMS) $(builddir)/../generator/gapi_codegen.
 gio-sharp.dll: $(srcdir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"
 if USING_MONO
-	$(CSC) -target:library -out:$@ $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs
+	$(CSC) -target:library -out:$@ $(CSC_FLAGS) $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs
 else
 # !USING_MONO implies being on Windows
 # work around irritating csc misfeature: source file names on the
