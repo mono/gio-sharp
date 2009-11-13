@@ -16,7 +16,6 @@ else
 	using_mono=yes
 	AC_PATH_PROG(CSC, gmcs)
 fi
-AC_SUBST(SLASH)
 AM_CONDITIONAL(USING_MONO, [test $using_mono = yes])
 AC_PATH_PROG(GACUTIL, gacutil, no)
 if test "x$GACUTIL" = "xno" ; then
