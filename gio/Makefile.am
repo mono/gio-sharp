@@ -6,7 +6,11 @@ SRCS =						\
 	FileFactory.cs				\
 	GioStream.cs
 
-CUSTOMS =
+CUSTOMS =					\
+	AppInfoAdapter.custom			\
+	FileAdapter.custom			\
+	File.custom				\
+	FileEnumerator.custom
 
 ASSEMBLIES =					\
 	`pkg-config --libs glib-sharp-2.0`

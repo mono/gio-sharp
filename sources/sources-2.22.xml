@@ -7,6 +7,8 @@
           <exclude>gcontenttypeprivate.h</exclude>
           <exclude>gdummyfile.h</exclude>
           <exclude>gfileattribute-priv.h</exclude>
+	  <exclude>ginetaddress.h</exclude>
+	  <exclude>ginetsocketaddress.h</exclude>
           <exclude>gioalias.h</exclude>
           <exclude>gio-marshal.h</exclude>
           <exclude>giomodule-priv.h</exclude>
@@ -18,16 +20,37 @@
           <exclude>glocalvfs.h</exclude>
           <exclude>gmountprivate.h</exclude>
           <exclude>gpollfilemonitor.h</exclude>
+	  <exclude>gresolver.h</exclude>
+	  <exclude>gsocket.h</exclude>
+	  <exclude>gsocketaddress.h</exclude>
+	  <exclude>gsocketaddressenumerator.h</exclude>
+	  <exclude>gsocketclient.h</exclude>
+	  <exclude>gsocketconnectable.h</exclude>
+	  <exclude>gsocketconnection.h</exclude>
+	  <exclude>gsocketcontrolmessage.h</exclude>
+	  <exclude>gsocketinputstream.h</exclude>
+	  <exclude>gsocketlistener.h</exclude>
+	  <exclude>gsocketoutputstream.h</exclude>
+	  <exclude>gsocketservice.h</exclude>
+	  <exclude>gtcpconnection.h</exclude>
+	  <exclude>gthreadedresolver.h</exclude>
+	  <exclude>gthreadedsocketservice.h</exclude>
+	  <exclude>gudpconnection.h</exclude>
           <exclude>gunionvolumemonitor.h</exclude>
+	  <exclude>gunixconnection.h</exclude>
+	  <exclude>gunixfdmessage.h</exclude>
           <exclude>gunixinputstream.h</exclude>
           <exclude>gunixmount.h</exclude>
           <exclude>gunixmounts.h</exclude>
           <exclude>gunixoutputstream.h</exclude>
+	  <exclude>gunixresolver.h</exclude>
+	  <exclude>gunixsocketaddress.h</exclude>
           <exclude>gunixvolume.h</exclude>
           <exclude>gunixvolumemonitor.h</exclude>
           <exclude>gwin32appinfo.h</exclude>
           <exclude>gwin32mount.h</exclude>
           <exclude>gwin32volumemonitor.h</exclude>
+	  <exclude>gwin32resolver.h</exclude>
 	</directory>
       </namespace>
     </library>
