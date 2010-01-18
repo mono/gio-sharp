@@ -69,5 +69,7 @@ CLEANFILES = 			\
 EXTRA_DIST =			\
 	$(SRCS)			\
 	$(CUSTOMS)		\
+	Gio.metadata	\
+	gtk-sharp.snk	\
 	gio-api.raw		\
 	gio-sharp-2.0.pc.in
