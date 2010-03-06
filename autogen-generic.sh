@@ -13,7 +13,7 @@ sed 	-e "s/@GIO_SHARP_VERSION@/$GIO_SHARP_VERSION/"	\
 ln -f sources/sources-$GIO_SHARP_VERSION.xml sources/sources.xml
 ln -f gio/gio-api-$GIO_SHARP_VERSION.raw gio/gio-api.raw
 
-autoreconf -v --force --install -I config -I m4
+autoreconf -v --force --install
 
 if test x$NOCONFIGURE = x; then
   echo Running $srcdir/configure $conf_flags "$@" ...

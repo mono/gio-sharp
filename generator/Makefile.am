@@ -62,3 +62,4 @@ gapi_codegen.exe: $(build_sources)
 	@echo -e "\n*** Building the generator"
 	$(CSC) /out:gapi_codegen.exe $(OFF_T_FLAGS) $(references) $(build_sources)
 
+MAINTAINERCLEANFILES = Makefile.in

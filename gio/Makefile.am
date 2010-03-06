@@ -2,9 +2,8 @@ UNSAFE = -unsafe
 DEBUG = -debug
 
 SRCS =						\
-	AssemblyInfo.cs				\
-	FileFactory.cs				\
-	GioStream.cs
+	$(srcdir)/FileFactory.cs				\
+	$(srcdir)/GioStream.cs
 
 CUSTOMS =					\
 	AppInfoAdapter.custom			\
@@ -31,17 +30,18 @@ $(top_builddir)/generator/gapi_codegen.exe:
 
 generated/File.cs: gio-api.xml $(CUSTOMS) $(builddir)/../generator/gapi_codegen.exe
 	@echo -e "\n*** Generating C# code"
-	$(MONO) $(builddir)/../generator/gapi_codegen.exe $(GLIBSHARP_CFLAGS) --outdir=generated --customdir=$(srcdir) --generate gio-api.xml
+	mkdir -p $(builddir)/generated
+	$(MONO) $(builddir)/../generator/gapi_codegen.exe $(GLIBSHARP_CFLAGS) --outdir=$(builddir)/generated --customdir=$(srcdir) --generate gio-api.xml
 
-gio-sharp.dll: $(srcdir)/generated/File.cs $(SRCS)
+gio-sharp.dll: $(builddir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"
 if USING_MONO
-	$(CSC) -target:library -out:$@ $(CSC_FLAGS) $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs
+	$(CSC) -target:library -out:$@ $(CSC_FLAGS) $(UNSAFE) $(DEBUG) $(ASSEMBLIES) AssemblyInfo.cs $(SRCS) $(builddir)/generated/*.cs
 else
 # !USING_MONO implies being on Windows
 # work around irritating csc misfeature: source file names on the
 # command line from subdirs must use \ directory separators
-	@echo $(CSC) -target:library -out:$@ $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) $(srcdir)/generated/*.cs | \
+	@echo $(CSC) -target:library -out:$@ $(UNSAFE) $(DEBUG) $(ASSEMBLIES) $(SRCS) AssemblyInfo.cs $(builddir)/generated/*.cs | \
 		sed -e 's!^/\(.\)/!\1:\\!' -e 's!/!\\!g' | cmd
 endif
 
@@ -52,7 +52,7 @@ if !USING_MONO
 endif
 
 uninstall-local:
-	-$(GACUTIL) -u gio-sharp.dll $(GACUTIL_FLAGS)
+	-$(GACUTIL) -u gio-sharp $(GACUTIL_FLAGS)
 if !USING_MONO
 	rm $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION)/gio-sharp.dll
 endif
@@ -64,9 +64,16 @@ pkgconfig_DATA = gio-sharp-2.0.pc
 CLEANFILES = 			\
 	gio-sharp.dll 	\
 	gio-sharp.dll.mdb \
-	gio-api.xml
+	gio-api.xml 
+
+DISTCLEANFILES = \
+    AssemblyInfo.cs \
+    generated/*.cs
+
+MAINTAINERCLEANFILES = Makefile.in
 
 EXTRA_DIST =			\
+	AssemblyInfo.cs.in \
 	$(SRCS)			\
 	$(CUSTOMS)		\
 	Gio.metadata	\
