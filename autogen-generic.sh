@@ -10,8 +10,8 @@ sed 	-e "s/@GIO_SHARP_VERSION@/$GIO_SHARP_VERSION/"	\
 	-e "s/@CSC_FLAGS@/$CSC_FLAGS/"		\
   configure.ac.in > configure.ac
 
-ln -f sources/sources-$GIO_SHARP_VERSION.xml sources/sources.xml
-ln -f gio/gio-api-$GIO_SHARP_VERSION.raw gio/gio-api.raw
+ln -f sources/sources-$GLIB_REQUIRED.xml sources/sources.xml
+ln -f gio/gio-api-$GLIB_REQUIRED.raw gio/gio-api.raw
 
 autoreconf -v --force --install
 
