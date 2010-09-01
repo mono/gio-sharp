@@ -1,0 +1,59 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(gio-sharp, @GIO_SHARP_VERSION@, stephane@delcroix.org)
+AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_SRCDIR(gio/AssemblyInfo.cs.in)
+
+AM_INIT_AUTOMAKE
+
+PACKAGE_VERSION=gio-sharp-2.0
+AC_SUBST(PACKAGE_VERSION)
+AC_PATH_PROG(MONO, mono, no)
+if test "x$MONO" = "xno" ; then
+	using_mono=no
+	MONO=
+	AC_PATH_PROG(CSC, csc.exe)
+else
+	using_mono=yes
+	AC_PATH_PROG(CSC, gmcs)
+fi
+AM_CONDITIONAL(USING_MONO, [test $using_mono = yes])
+AC_PATH_PROG(GACUTIL, gacutil, no)
+if test "x$GACUTIL" = "xno" ; then
+	AC_MSG_ERROR([No gacutil tool found. You need to install either the mono or .Net SDK.])
+fi
+
+if test $using_mono = yes; then
+	GACUTIL_FLAGS='/package $(PACKAGE_VERSION) /gacdir $(DESTDIR)$(prefix)/lib'
+fi
+
+AC_SUBST(GACUTIL)
+AC_SUBST(GACUTIL_FLAGS)
+
+PKG_CHECK_MODULES(GLIBSHARP, glib-sharp-2.0 >= 2.12)
+PKG_CHECK_MODULES(GAPI, gapi-2.0 >= 2.12.0)
+
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= @GLIB_REQUIRED@)
+
+CSC_FLAGS="@CSC_FLAGS@"
+
+if test `uname -s` = "Darwin"; then
+	LIB_PREFIX=
+	LIB_SUFFIX=.dylib
+else
+	LIB_PREFIX=.so
+	LIB_SUFFIX=
+fi
+
+AC_SUBST(CSC_FLAGS)
+AC_SUBST(LIB_PREFIX)
+AC_SUBST(LIB_SUFFIX)
+
+AC_OUTPUT(
+Makefile 
+generator/Makefile
+gio/Makefile
+gio/AssemblyInfo.cs
+gio/gio-sharp.dll.config
+gio/gio-sharp-2.0.pc
+sources/Makefile
+)

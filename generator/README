@@ -1,0 +1,4 @@
+This generator is used by gio-sharp at build-time only, to generate the bindings
+for GIO.  It is licensed under the GPLv2, but gio-sharp itself is under the MIT/X11.
+
+This is a bundled copy of the generator used for gtk-sharp.

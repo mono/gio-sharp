@@ -1,0 +1,11 @@
+Makefile
+Makefile.in
+generated-stamp
+gio-api.xml
+gio-api.raw
+gio-sharp-2.0.pc
+gio-sharp.dll
+gio-sharp.dll.config
+gio-sharp.dll.mdb
+xdb.s
+generated
