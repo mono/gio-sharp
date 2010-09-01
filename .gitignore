@@ -9,3 +9,4 @@ configure
 autom4te.cache
 config
 configure.ac
+gio/AssemblyInfo.cs
