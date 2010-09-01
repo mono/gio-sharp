@@ -17,7 +17,7 @@ ASSEMBLIES =					\
 all: gio-sharp.dll
 
 giodir = $(prefix)/lib/gio-sharp
-gio_SCRIPTS = gio-sharp.dll gio-sharp.dll.mdb
+gio_SCRIPTS = gio-sharp.dll gio-sharp.dll.mdb gio-sharp.dll.config
 
 gapidir = $(datadir)/gapi-2.0
 gapi_DATA = gio-api.xml
@@ -53,6 +53,7 @@ pkgconfig_DATA = gio-sharp-2.0.pc
 
 CLEANFILES = 			\
 	gio-sharp.dll 	\
+	gio-sharp.dll.config \
 	gio-sharp.dll.mdb \
 	gio-api.xml 
 
