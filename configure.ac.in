@@ -3,7 +3,7 @@ AC_INIT(gio-sharp, @GIO_SHARP_VERSION@, stephane@delcroix.org)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(gio/AssemblyInfo.cs.in)
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([dist-bzip2 tar-ustar])
 
 PACKAGE_VERSION=gio-sharp-2.0
 AC_SUBST(PACKAGE_VERSION)
