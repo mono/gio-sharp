@@ -16,6 +16,9 @@ ASSEMBLIES =					\
 
 all: gio-sharp.dll
 
+giodir = $(prefix)/lib/gio-sharp
+gio_SCRIPTS = gio-sharp.dll gio-sharp.dll.mdb
+
 gapidir = $(datadir)/gapi-2.0
 gapi_DATA = gio-api.xml
 
@@ -45,21 +48,8 @@ else
 		sed -e 's!^/\(.\)/!\1:\\!' -e 's!/!\\!g' | cmd
 endif
 
-install-data-local: gio-sharp.dll
-	-$(GACUTIL) -i $< -f $(GACUTIL_FLAGS)
-if !USING_MONO
-	$(MKDIR_P) $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION); $(INSTALL) $< $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION)
-endif
-
-uninstall-local:
-	-$(GACUTIL) -u gio-sharp $(GACUTIL_FLAGS)
-if !USING_MONO
-	rm $(DESTDIR)$(libdir)/mono/$(PACKAGE_VERSION)/gio-sharp.dll
-endif
-
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gio-sharp-2.0.pc
-
 
 CLEANFILES = 			\
 	gio-sharp.dll 	\

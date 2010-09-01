@@ -1,0 +1,15 @@
+gio-sharp binds the GIO API, which isn't available in Gtk#.
+
+It is not installed in the GAC because we are not ready to commit to API
+stability.  Please follow
+
+http://www.mono-project.com/Guidelines:Application_Deployment#Libraries_with_Unstable_APIs
+
+for how to use this library in your application.
+
+Website: http://github.com/mono/gio-sharp
+
+Requirements:
+* glib-2.0 >= 2.18
+* Gtk# 2.12 
+* GAPI 2.12
