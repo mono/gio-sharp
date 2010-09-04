@@ -3,7 +3,7 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 assemblies_dir=${libdir}/gio-sharp
 gapidir=${prefix}/share/gapi-2.0
-Libraries=${assemblies_dir}/gio-sharp.dll ${assemblies_dir}/gio-sharp.dll.mdb
+Libraries=${assemblies_dir}/gio-sharp.dll
 
 Name: GIO#
 Description: GIO# - GIO .NET Binding
