@@ -34,4 +34,6 @@ System.Uri Uri
 	get;
 }
 
-bool Delete();
+bool Delete ();
+
+void Dispose ();

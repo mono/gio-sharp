@@ -38,12 +38,12 @@ namespace GLib
 
 		public static File NewForUri (string uri)
 		{
-			return GLib.FileAdapter.GetObject (g_file_new_for_uri (uri), false) as File;
+			return GLib.FileAdapter.GetObject (g_file_new_for_uri (uri), true) as File;
 		}
 
 		public static File NewForUri (Uri uri)
 		{
-			return GLib.FileAdapter.GetObject (g_file_new_for_uri (uri.ToString ()), false) as File;
+			return GLib.FileAdapter.GetObject (g_file_new_for_uri (uri.ToString ()), true) as File;
 		}
 
 		[DllImport ("libgio-2.0-0.dll")]
@@ -51,7 +51,7 @@ namespace GLib
 		
 		public static File NewForPath (string path)
 		{
-			return GLib.FileAdapter.GetObject (g_file_new_for_path (path), false) as File;	
+			return GLib.FileAdapter.GetObject (g_file_new_for_path (path), true) as File;	
 		}
 
 		[DllImport ("libgio-2.0-0.dll")]
@@ -59,7 +59,7 @@ namespace GLib
 
 		public static File NewFromCommandlineArg (string arg)
 		{
-			return GLib.FileAdapter.GetObject (g_file_new_for_commandline_arg (arg), false) as File;
+			return GLib.FileAdapter.GetObject (g_file_new_for_commandline_arg (arg), true) as File;
 		}
 	}
 }

@@ -50,4 +50,19 @@ public System.Uri Uri {
 	}
 }
 
+bool disposed = false;
+public void Dispose ()
+{
+	disposed = true;
+	var o = GLib.Object.GetObject (Handle, false);
+	if (o != null)
+		o.Dispose ();
+}
+
+~FileAdapter () 
+{
+	if (!disposed)
+		Dispose ();
+}
+
 
