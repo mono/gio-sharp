@@ -145,7 +145,7 @@ namespace GLib
 			if (is_disposed)
 				throw new ObjectDisposedException ("The stream is closed");
 			InputStream input_stream = null;
-			if (stream is InputStream) 
+			if (stream is InputStream)
 				input_stream = stream as InputStream;
 #if GIO_SHARP_2_22
 			else if (stream is IOStream)

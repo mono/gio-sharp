@@ -42,7 +42,7 @@ public bool Delete ()
 [DllImport("libgio-2.0-0.dll")]
 static extern IntPtr g_file_get_uri(IntPtr raw);
 
-public System.Uri Uri { 
+public System.Uri Uri {
 	get {
 		IntPtr raw_ret = g_file_get_uri(Handle);
 		string ret = GLib.Marshaller.PtrToStringGFree(raw_ret);
@@ -59,7 +59,7 @@ public void Dispose ()
 		o.Dispose ();
 }
 
-~FileAdapter () 
+~FileAdapter ()
 {
 	if (!disposed)
 		Dispose ();
