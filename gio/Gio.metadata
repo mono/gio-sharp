@@ -17,11 +17,9 @@
   <attr path="/api/namespace/interface/method/*/*[@type='GAsyncReadyCallback']" name="scope">async</attr>
   <attr path="/api/namespace/interface[@cname='GMount']" name="consume_only">1</attr>
   <attr path="/api/namespace/interface[@cname='GMount']/method[@name='CanUnmount']" name="name">GetCanUnmount</attr>
-  <attr path="/api/namespace/interface[@cname='GMount']/virtual_method[@name='GuessContentTypeFinish']/return-type" name="type">GStrv</attr>
-  <attr path="/api/namespace/interface[@cname='GMount']/virtual_method[@name='GuessContentTypeSync']/return-type" name="type">GStrv</attr>
+  <attr path="/api/namespace/interface[@cname='GMount']/method[@name='GuessContentTypeFinish']/return-type" name="null_term_array">1</attr>
+  <attr path="/api/namespace/interface[@cname='GMount']/method[@name='GuessContentTypeSync']/return-type" name="null_term_array">1</attr>
   <attr path="/api/namespace/interface[@cname='GSeekable']/method[@cname='g_seekable_can_seek']" name="name">GetCanSeek</attr>
-  <attr path="/api/namespace/interface[@cname='GMount']/method[@name='GuessContentTypeFinish']/return-type" name="type">GStrv</attr>
-  <attr path="/api/namespace/interface[@cname='GMount']/method[@name='GuessContentTypeSync']/return-type" name="type">GStrv</attr>
   <attr path="/api/namespace/interface[@cname='GSeekable']/method[@cname='g_seekable_tell']" name="name">GetPosition</attr>
   <attr path="/api/namespace/interface[@cname='GVolume']" name="consume_only">1</attr>
   <attr path="/api/namespace/interface[@cname='GVolume']/method[@name='GetMount']" name="name">GetMountInstance</attr>
@@ -53,7 +51,7 @@
   <attr path="/api/namespace/object[@cname='GOutputStream']/method[@cname='g_output_stream_write_async']/parameters/parameter[@name='buffer']" name="array">1</attr>
   <attr path="/api/namespace/object[@cname='GSimpleAsyncResult']/constructor[@cname='g_simple_async_result_new_error']" name="hidden">1</attr>
   <attr path="/api/namespace/object[@cname='GSimpleAsyncResult']/method[@name='SetError']" name="hidden">1</attr>
-  <attr path="/api/namespace/object[@cname='GThemedIcon']/method[@name='GetNames']/return-type" name="type">GStrv</attr> 
+  <attr path="/api/namespace/object[@cname='GThemedIcon']/method[@name='GetNames']/return-type" name="null_term_array">1</attr> 
   <attr path="/api/namespace/object[@cname='GVolumeMonitor']/method[@name='Get']" name="name">GetDefault</attr>
   <attr path="/api/namespace/object[@cname='GVolumeMonitor']/method[@name='GetMounts']/return-type" name="element_type">GMount*</attr>
   <attr path="/api/namespace/object[@cname='GVolumeMonitor']/method[@name='GetMounts']/return-type" name="owned">true</attr>
