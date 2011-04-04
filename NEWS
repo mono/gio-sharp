@@ -1,3 +1,16 @@
+===========================
+Version 0.3 - April 4, 2011
+===========================
+
+Contributors:
+Alex Launi, Bertrand Lorentz, Gabriel Burt, Iain Lane, Rico Tzschichholz
+
+* Remove the .mdb file from Libraries in the .pc file
+* Fix FileAdapter leak
+* Fix GuessContentTypeSync return type to GStrv
+* Fix null-terminated-array return types to return string[]
+* Methods returning NULL terminated gchar* arrays now actually return string[].
+
 ==========================
 Version 0.2 - Sept 1, 2010
 ==========================
