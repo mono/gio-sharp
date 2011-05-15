@@ -36,6 +36,8 @@ generated/File.cs: gio-api.xml $(CUSTOMS) $(builddir)/../generator/gapi_codegen.
 	mkdir -p $(builddir)/generated
 	$(MONO) $(builddir)/../generator/gapi_codegen.exe $(GLIBSHARP_CFLAGS) --outdir=$(builddir)/generated --customdir=$(srcdir) --generate gio-api.xml
 
+gio-sharp.dll.mdb: gio-sharp.dll
+
 gio-sharp.dll: $(builddir)/generated/File.cs $(SRCS)
 	@echo -e "\n*** Building $@"
 if USING_MONO
