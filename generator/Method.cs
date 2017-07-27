@@ -34,6 +34,9 @@ namespace GtkSharp.Generation {
 		private string call;
 		private bool is_get, is_set;
 		private bool deprecated = false;
+		private bool win32_utf8_variant = false;
+		private bool cacheValue = false;
+		private string cacheName = string.Empty;
 
 		public Method (XmlElement elem, ClassBase container_type) : base (elem, container_type)
 		{
@@ -43,9 +46,21 @@ namespace GtkSharp.Generation {
 				string attr = elem.GetAttribute ("deprecated");
 				deprecated = attr == "1" || attr == "true";
 			}
-			
-			if (Name == "GetType")
+
+			if (elem.HasAttribute ("win32_utf8_variant")) {
+				string attr = elem.GetAttribute ("win32_utf8_variant");
+				win32_utf8_variant = attr == "1" || attr.ToLower () == "true";
+			}
+
+			if (Name == "GetType") {
 				Name = "GetGType";
+				cacheValue = !(container_type is StructBase) && !retval.IsVoid;
+				cacheName = "_gtype";
+			}
+		}
+
+		public bool HasWin32Utf8Variant {
+			get { return win32_utf8_variant; }
 		}
 
 		public bool IsDeprecated {
@@ -107,11 +122,6 @@ namespace GtkSharp.Generation {
 
 		private void GenerateDeclCommon (StreamWriter sw, ClassBase implementor)
 		{
-			GenerateDeclCommon (sw, implementor, false);
-		}
-
-		private void GenerateDeclCommon (StreamWriter sw, ClassBase implementor, bool is_interface)
-		{
 			if (IsStatic)
 				sw.Write("static ");
 			sw.Write (Safety);
@@ -121,7 +131,7 @@ namespace GtkSharp.Generation {
 			if (implementor != null)
 				dup = implementor.GetMethodRecursively (Name);
 
-			if (Name == "ToString" && Parameters.Count == 0 && !is_interface)
+			if (Name == "ToString" && Parameters.Count == 0)
 				sw.Write("override ");
 			else if (Name == "GetGType" && container_type is ObjectGen)
 				sw.Write("new ");
@@ -153,11 +163,6 @@ namespace GtkSharp.Generation {
 
 		public void GenerateDecl (StreamWriter sw)
 		{
-			GenerateDecl (sw, false);
-		}
-
-		public void GenerateDecl (StreamWriter sw, bool is_interface)
-		{
 			if (IsStatic)
 				return;
 
@@ -183,7 +188,7 @@ namespace GtkSharp.Generation {
 			else
 			{
 				sw.Write("\t\t");
-				GenerateDeclCommon (sw, null, is_interface);
+				GenerateDeclCommon (sw, null);
 				sw.WriteLine (";");
 			}
 
@@ -195,12 +200,28 @@ namespace GtkSharp.Generation {
 			string import_sig = IsStatic ? "" : container_type.MarshalType + " raw";
 			import_sig += !IsStatic && Parameters.Count > 0 ? ", " : "";
 			import_sig += Parameters.ImportSignature.ToString();
-			sw.WriteLine("\t\t[DllImport(\"" + LibraryName + "\")]");
+			sw.WriteLine("\t\t[DllImport(\"" + LibraryName + "\", CallingConvention = CallingConvention.Cdecl)]");
 			if (retval.MarshalType.StartsWith ("[return:"))
 				sw.WriteLine("\t\t" + retval.MarshalType + " static extern " + Safety + retval.CSType + " " + CName + "(" + import_sig + ");");
 			else
 				sw.WriteLine("\t\tstatic extern " + Safety + retval.MarshalType + " " + CName + "(" + import_sig + ");");
 			sw.WriteLine();
+
+			if (HasWin32Utf8Variant) {
+				sw.WriteLine("\t\t[DllImport(\"" + LibraryName + "\", CallingConvention = CallingConvention.Cdecl)]");
+				if (retval.MarshalType.StartsWith ("[return:"))
+					sw.WriteLine("\t\t" + retval.MarshalType + " static extern " + Safety + retval.CSType + " " + CName + "_utf8(" + import_sig + ");");
+				else
+					sw.WriteLine("\t\tstatic extern " + Safety + retval.MarshalType + " " + CName + "_utf8(" + import_sig + ");");
+				sw.WriteLine();
+			}
+		}
+
+		public void GenerateCacheValue (StreamWriter sw)
+		{
+			if (!cacheValue)
+				return;
+			sw.WriteLine ("\t\tstatic {0} {1} = new {0} ({2});", retval.CSType, cacheName, CName + call);
 		}
 
 		public void Generate (GenerationInfo gen_info, ClassBase implementor)
@@ -233,6 +254,7 @@ namespace GtkSharp.Generation {
 			}
 			
 			GenerateImport (gen_info.Writer);
+			GenerateCacheValue (gen_info.Writer);
 			if (comp != null && retval.CSType == comp.Parameters.AccessorReturnType)
 				comp.GenerateImport (gen_info.Writer);
 
@@ -279,14 +301,40 @@ namespace GtkSharp.Generation {
 				implementor.Prepare (sw, indent + "\t\t\t");
 			if (IsAccessor)
 				Body.InitAccessor (sw, Signature, indent);
-			Body.Initialize(gen_info, is_get, is_set, indent);
+			Body.Initialize(gen_info, is_get, is_set, indent, false);
 
-			sw.Write(indent + "\t\t\t");
-			if (retval.IsVoid)
-				sw.WriteLine(CName + call + ";");
-			else {
-				sw.WriteLine(retval.MarshalType + " raw_ret = " + CName + call + ";");
-				sw.WriteLine(indent + "\t\t\t" + retval.CSType + " ret = " + retval.FromNative ("raw_ret") + ";");
+			if (HasWin32Utf8Variant) {
+				if (!retval.IsVoid)
+					sw.WriteLine(indent + "\t\t\t" + retval.MarshalType + " raw_ret;");
+				sw.WriteLine(indent + "\t\t\t" + "if (Environment.OSVersion.Platform == PlatformID.Win32NT ||");
+				sw.WriteLine(indent + "\t\t\t" + "    Environment.OSVersion.Platform == PlatformID.Win32S ||");
+				sw.WriteLine(indent + "\t\t\t" + "    Environment.OSVersion.Platform == PlatformID.Win32Windows ||");
+				sw.WriteLine(indent + "\t\t\t" + "    Environment.OSVersion.Platform == PlatformID.WinCE)");
+				if (retval.IsVoid) {
+					sw.WriteLine(indent + "\t\t\t\t" + CName + "_utf8" + call + ";");
+					sw.WriteLine(indent + "\t\t\t" + "else");
+					sw.WriteLine(indent + "\t\t\t\t" + CName + call + ";");
+				} else {
+					sw.WriteLine(indent + "\t\t\t\traw_ret = " + CName + "_utf8" + call + ";");
+					sw.WriteLine(indent + "\t\t\t" + "else");
+					sw.WriteLine(indent + "\t\t\t\traw_ret = " + CName + call + ";");
+					sw.WriteLine(indent + "\t\t\t" + retval.CSType + " ret = " + retval.FromNative ("raw_ret") + ";");
+					var postRef = retval.PostFromNative ("raw_ret");
+					if (postRef != string.Empty)
+						sw.WriteLine (indent + "\t\t\t" + postRef);
+					sw.WriteLine ();
+				}
+			} else {
+				sw.Write(indent + "\t\t\t");
+				if (retval.IsVoid)
+					sw.WriteLine(CName + call + ";");
+				else if (!cacheValue) {
+					sw.WriteLine(retval.MarshalType + " raw_ret = " + CName + call + ";");
+					sw.WriteLine(indent + "\t\t\t" + retval.CSType + " ret = " + retval.FromNative ("raw_ret") + ";");
+					var postRef = retval.PostFromNative ("raw_ret");
+					if (postRef != string.Empty)
+						sw.WriteLine (indent + "\t\t\t" + postRef);
+				}
 			}
 
 			if (!IsStatic && implementor != null)
@@ -294,21 +342,20 @@ namespace GtkSharp.Generation {
 			Body.Finish (sw, indent);
 			Body.HandleException (sw, indent);
 
-			if (is_get && Parameters.Count > 0) 
+			if (is_get && Parameters.Count > 0)
 				sw.WriteLine (indent + "\t\t\treturn " + Parameters.AccessorName + ";");
-			else if (!retval.IsVoid)
-				sw.WriteLine (indent + "\t\t\treturn ret;");
-			else if (IsAccessor)
+			else if (!retval.IsVoid) {
+				sw.WriteLine (indent + "\t\t\treturn " + (cacheValue ? cacheName : "ret") + ";");
+			} else if (IsAccessor)
 				Body.FinishAccessor (sw, Signature, indent);
 
 			sw.Write(indent + "\t\t}");
 		}
 
-		bool IsAccessor { 
-			get { 
-				return retval.IsVoid && Signature.IsAccessor; 
-			} 
+		bool IsAccessor {
+			get {
+				return retval.IsVoid && Signature.IsAccessor;
+			}
 		}
 	}
 }
-

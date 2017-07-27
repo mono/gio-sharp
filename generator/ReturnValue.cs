@@ -31,6 +31,7 @@ namespace GtkSharp.Generation {
 		bool is_array;
 		bool elements_owned;
 		bool owned;
+		bool needs_ref;
 		string ctype = String.Empty;
 		string element_ctype = String.Empty;
 
@@ -43,6 +44,7 @@ namespace GtkSharp.Generation {
 				owned = elem.GetAttribute ("owned") == "true";
 				ctype = elem.GetAttribute("type");
 				element_ctype = elem.GetAttribute ("element_type");
+				needs_ref = elem.GetAttribute ("needs_ref") == "true";
 			}
 		}
 
@@ -124,15 +126,23 @@ namespace GtkSharp.Generation {
 			if (ElementType != String.Empty) {
 				string args = (owned ? "true" : "false") + ", " + (elements_owned ? "true" : "false");
 				if (IGen.QualifiedName == "GLib.PtrArray")
-					return String.Format ("({0}[]) GLib.Marshaller.PtrArrayToArray ({1}, {2}, typeof({0}))", ElementType, var, args);
+					return String.Format ("GLib.Marshaller.PtrArrayToArray<{0}> ({1}, {2})", ElementType, var, args);
 				else
-					return String.Format ("({0}[]) GLib.Marshaller.ListPtrToArray ({1}, typeof({2}), {3}, typeof({0}))", ElementType, var, IGen.QualifiedName, args);
+					return String.Format ("GLib.Marshaller.ListPtrToArray<{0}> ({1}, typeof({2}), {3})", ElementType, var, IGen.QualifiedName, args);
 			} else if (IGen is HandleBase)
 				return ((HandleBase)IGen).FromNative (var, owned);
 			else if (is_null_term)
 				return String.Format ("GLib.Marshaller.NullTermPtrToStringArray ({0}, {1})", var, owned ? "true" : "false");
 			else
 				return IGen.FromNativeReturn (var);
+		}
+
+		public string PostFromNative (string var)
+		{
+			if (!needs_ref)
+				return string.Empty;
+
+			return "g_object_ref (" + var + ");";
 		}
 			
 		public string ToNative (string var)

@@ -4,6 +4,7 @@ references =
 
 sources = 				\
 	AliasGen.cs			\
+	AttributeHelper.cs	\
 	BoxedGen.cs			\
 	ByRefGen.cs			\
 	CallbackGen.cs			\

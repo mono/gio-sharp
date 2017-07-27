@@ -25,6 +25,7 @@ namespace GtkSharp.Generation {
 	using System;
 	using System.Collections;
 	using System.IO;
+	using System.Linq;
 	using System.Xml;
 
 	public class Ctor : MethodBase  {
@@ -63,7 +64,7 @@ namespace GtkSharp.Generation {
 
 		void GenerateImport (StreamWriter sw)
 		{
-			sw.WriteLine("\t\t[DllImport(\"" + LibraryName + "\")]");
+			sw.WriteLine("\t\t[DllImport(\"" + LibraryName + "\", CallingConvention = CallingConvention.Cdecl)]");
 			sw.WriteLine("\t\tstatic extern " + Safety + "IntPtr " + CName + "(" + Parameters.ImportSignature + ");");
 			sw.WriteLine();
 		}
@@ -74,7 +75,7 @@ namespace GtkSharp.Generation {
 			sw.WriteLine("\t\t" + Protection + " static " + Safety + Modifiers +  name + " " + StaticName + "(" + Signature + ")");
 			sw.WriteLine("\t\t{");
 
-			Body.Initialize(gen_info, false, false, ""); 
+			Body.Initialize(gen_info, false, false, "", false); 
 
 			sw.Write("\t\t\t" + name + " result = ");
 			if (container_type is StructBase)
@@ -85,6 +86,11 @@ namespace GtkSharp.Generation {
 			Body.Finish (sw, ""); 
 			Body.HandleException (sw, ""); 
 			sw.WriteLine ("\t\t\treturn result;");
+		}
+
+		static bool IsNullable (IGeneratable gen)
+		{
+			return gen is ClassBase && !(gen is StructBase);
 		}
 
 		public void Generate (GenerationInfo gen_info)
@@ -105,9 +111,11 @@ namespace GtkSharp.Generation {
 
 				if (needs_chaining) {
 					sw.WriteLine ("\t\t\tif (GetType () != typeof (" + name + ")) {");
+					if (gen_info.AssemblyName == "gtk-sharp")
+						sw.WriteLine ("\t\t\t\tGtk.Application.AssertMainThread();");
 					
 					if (Parameters.Count == 0) {
-						sw.WriteLine ("\t\t\t\tCreateNativeObject (new string [0], new GLib.Value[0]);");
+						sw.WriteLine ("\t\t\t\tCreateNativeObject (Array.Empty<IntPtr> (), Array.Empty<GLib.Value> (), 0);");
 						sw.WriteLine ("\t\t\t\treturn;");
 					} else {
 						ArrayList names = new ArrayList ();
@@ -124,23 +132,43 @@ namespace GtkSharp.Generation {
 						}
 
 						if (names.Count == Parameters.Count) {
-							sw.WriteLine ("\t\t\t\tArrayList vals = new ArrayList();");
-							sw.WriteLine ("\t\t\t\tArrayList names = new ArrayList();");
+							bool genFixedDimension = true;
+							foreach (Parameter par in Parameters) {
+								if (IsNullable (par.Generatable)) {
+									genFixedDimension = false;
+									break;
+								}
+							}
+							sw.WriteLine ("\t\t\t\tunsafe {");
+							sw.WriteLine ("\t\t\t\t\tvar vals = stackalloc GLib.Value[{0}];", Parameters.Count);
+							sw.WriteLine ("\t\t\t\t\tvar names = stackalloc IntPtr[{0}];", names.Count);
+							if (!genFixedDimension)
+								sw.WriteLine ("\t\t\t\t\tvar param_count = 0;");
 							for (int i = 0; i < names.Count; i++) {
 								Parameter p = Parameters [i];
-								string indent = "\t\t\t\t";
-								if (p.Generatable is ClassBase && !(p.Generatable is StructBase)) {
+								string indent = "\t\t\t\t\t";
+								if (IsNullable (p.Generatable)) {
 									sw.WriteLine (indent + "if (" + p.Name + " != null) {");
 									indent += "\t";
 								}
-								sw.WriteLine (indent + "names.Add (\"" + names [i] + "\");");
-								sw.WriteLine (indent + "vals.Add (new GLib.Value (" + values[i] + "));");
+								if (genFixedDimension) {
+									sw.WriteLine (indent + "names[" + i + "] = GLib.Marshaller.StringToPtrGStrdup (\"" + names [i] + "\");");
+									sw.WriteLine (indent + "vals[" + i + "] = new GLib.Value (" + values [i] + ");");
+								} else {
+									sw.WriteLine (indent + "names[param_count] = GLib.Marshaller.StringToPtrGStrdup (\"" + names [i] + "\");");
+									sw.WriteLine (indent + "vals[param_count++] = new GLib.Value (" + values [i] + ");");
+								}
 
-								if (p.Generatable is ClassBase && !(p.Generatable is StructBase))
-									sw.WriteLine ("\t\t\t\t}");
+								if (IsNullable (p.Generatable))
+									sw.WriteLine ("\t\t\t\t\t}");
 							}
 
-							sw.WriteLine ("\t\t\t\tCreateNativeObject ((string[])names.ToArray (typeof (string)), (GLib.Value[])vals.ToArray (typeof (GLib.Value)));");
+							if (genFixedDimension)
+								sw.WriteLine ("\t\t\t\t\tCreateNativeObject (names, vals, {0});", names.Count);
+							else
+								sw.WriteLine ("\t\t\t\t\tCreateNativeObject (names, vals, param_count);");
+
+							sw.WriteLine ("\t\t\t\t}");
 							sw.WriteLine ("\t\t\t\treturn;");
 						} else
 							sw.WriteLine ("\t\t\t\tthrow new InvalidOperationException (\"Can't override this constructor.\");");
@@ -149,7 +177,10 @@ namespace GtkSharp.Generation {
 					sw.WriteLine ("\t\t\t}");
 				}
 	
-				Body.Initialize(gen_info, false, false, ""); 
+				Body.Initialize(gen_info, false, false, "", false);
+				if (container_type is ObjectGen) {
+					sw.WriteLine ("\t\t\towned = true;");
+				}
 				sw.WriteLine("\t\t\t{0} = {1}({2});", container_type.AssignToName, CName, Body.GetCallString (false));
 				Body.Finish (sw, "");
 				Body.HandleException (sw, "");

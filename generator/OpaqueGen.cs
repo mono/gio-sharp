@@ -41,6 +41,29 @@ namespace GtkSharp.Generation {
 			}
 		}
 
+		ClassBase GetParentWithGType (ClassBase start)
+		{
+			ClassBase parent = start;
+			while (parent != null && parent.CName != "GObject") {
+				if (parent.GetMethod ("GetType") == null && parent.GetMethod ("GetGType") == null) {
+					parent = Parent;
+				} else {
+					return parent;
+				}
+			}
+			return null;
+		}
+
+		protected void GenerateAttribute (StreamWriter writer)
+		{
+			var parent = GetParentWithGType (this);
+			if (parent == null) {
+				writer.WriteLine ("\t[GLib.GTypeOpaque]");
+			} else {
+				writer.WriteLine ("\t[{0}]", Name);
+			}
+		}
+
 		public override void Generate (GenerationInfo gen_info)
 		{
 			gen_info.CurrentType = Name;
@@ -63,6 +86,7 @@ namespace GtkSharp.Generation {
 
 			if (IsDeprecated)
 				sw.WriteLine ("\t[Obsolete]");
+			GenerateAttribute (sw);
 			sw.Write ("\t{0} class " + Name, IsInternal ? "internal" : "public");
 			string cs_parent = table.GetCSType(Elem.GetAttribute("parent"));
 			if (cs_parent != "")
@@ -97,8 +121,6 @@ namespace GtkSharp.Generation {
 				}
 			}
 
-			bool finalizer_needed = false;
-
 			if (unref != null) {
 				unref.GenerateImport (sw);
 				sw.WriteLine ("\t\tprotected override void Unref (IntPtr raw)");
@@ -114,8 +136,7 @@ namespace GtkSharp.Generation {
 					sw.WriteLine ("\t\t[Obsolete(\"" + QualifiedName + " is now refcounted automatically\")]");
 					sw.WriteLine ("\t\tpublic void Unref () {}");
 					sw.WriteLine ();
-				}	
-				finalizer_needed = true;
+				}
 			}
 
 			if (dispose != null) {
@@ -130,37 +151,7 @@ namespace GtkSharp.Generation {
 					sw.WriteLine ("\t\t[Obsolete(\"" + QualifiedName + " is now freed automatically\")]");
 					sw.WriteLine ("\t\tpublic void " + dispose.Name + " () {}");
 					sw.WriteLine ();
-				}	
-				finalizer_needed = true;
-			}
-
-			if (finalizer_needed) {
-				sw.WriteLine ("\t\tclass FinalizerInfo {");
-				sw.WriteLine ("\t\t\tIntPtr handle;");
-				sw.WriteLine ();
-				sw.WriteLine ("\t\t\tpublic FinalizerInfo (IntPtr handle)");
-				sw.WriteLine ("\t\t\t{");
-				sw.WriteLine ("\t\t\t\tthis.handle = handle;");
-				sw.WriteLine ("\t\t\t}");
-				sw.WriteLine ();
-				sw.WriteLine ("\t\t\tpublic bool Handler ()");
-				sw.WriteLine ("\t\t\t{");
-				if (dispose != null)
-					sw.WriteLine ("\t\t\t\t{0} (handle);", dispose.CName);
-				else if (unref != null)
-					sw.WriteLine ("\t\t\t\t{0} (handle);", unref.CName);
-				sw.WriteLine ("\t\t\t\treturn false;");
-				sw.WriteLine ("\t\t\t}");
-				sw.WriteLine ("\t\t}");
-				sw.WriteLine ();
-				sw.WriteLine ("\t\t~{0} ()", Name);
-				sw.WriteLine ("\t\t{");
-				sw.WriteLine ("\t\t\tif (!Owned)");
-				sw.WriteLine ("\t\t\t\treturn;");
-				sw.WriteLine ("\t\t\tFinalizerInfo info = new FinalizerInfo (Handle);");
-				sw.WriteLine ("\t\t\tGLib.Timeout.Add (50, new GLib.TimeoutHandler (info.Handler));");
-				sw.WriteLine ("\t\t}");
-				sw.WriteLine ();
+				}
 			}
 
 #if false
@@ -180,6 +171,11 @@ namespace GtkSharp.Generation {
 			AppendCustom(sw, gen_info.CustomDir);
 
 			sw.WriteLine ("\t}");
+			var parentGType = GetParentWithGType (this);
+			if (parentGType == this) {
+				var method = parentGType.GetMethod ("GetType") ?? parentGType.GetMethod ("GetGType");
+				AttributeHelper.Gen (sw, Name, LibraryName, method.CName);
+			}
 			sw.WriteLine ("}");
 
 			sw.Close ();

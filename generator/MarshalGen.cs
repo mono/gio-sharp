@@ -28,14 +28,22 @@ namespace GtkSharp.Generation {
 		string mtype;
 		string call_fmt;
 		string from_fmt;
+		bool freeAfterUse;
 
-		public MarshalGen (string ctype, string type, string mtype, string call_fmt, string from_fmt) : base (ctype, type, "null")
+		public MarshalGen (string ctype, string type, string mtype, string call_fmt, string from_fmt) : this (ctype, type, mtype, call_fmt, from_fmt, true)
+		{
+		}
+
+		public MarshalGen (string ctype, string type, string mtype, string call_fmt, string from_fmt, bool freeAfterUse) : base (ctype, type, "null")
 		{
 			this.mtype = mtype;
 			this.call_fmt = call_fmt;
 			this.from_fmt = from_fmt;
+			FreeAfterUse = freeAfterUse;
 		}
-		
+
+		public bool FreeAfterUse { get; private set; }
+
 		public override string MarshalType {
 			get {
 				return mtype;
@@ -50,6 +58,23 @@ namespace GtkSharp.Generation {
 		public override string FromNative (string var)
 		{
 			return String.Format (from_fmt, var);
+		}
+	}
+
+	public class StringMarshalGen : MarshalGen, IManualMarshaler
+	{
+		public StringMarshalGen (string ctype, string type, string mtype, string call_fmt, string from_fmt) : base (ctype, type, mtype, call_fmt, from_fmt, true)
+		{
+		}
+
+		public string AllocNative (string managed_var)
+		{
+			return CallByName (managed_var);
+		}
+
+		public string ReleaseNative (string native_var)
+		{
+			return string.Format ("GLib.Marshaller.Free ({0})", native_var);
 		}
 	}
 }
